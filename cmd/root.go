@@ -244,7 +244,7 @@ func getRunParams(flags *pflag.FlagSet, st *storage.Storage) *settings.Server {
 		checkErr(errors.New("--socket flag cannot be used with --address, --port, --key nor --cert"))
 	}
 
-	// Do not use saved Socket if address was manually set.
+	// Doviper.GetInt not use saved Socket if address was manually set.
 	if isAddrSet && server.Socket != "" {
 		server.Socket = ""
 	}
@@ -342,6 +342,11 @@ func quickSetup(flags *pflag.FlagSet, d pythonData) {
 		Shell:    nil,
 		Rules:    nil,
 	}
+
+	set.Defaults.Commands = v.GetStringSlice("default.commands")
+
+	set.Branding.Name = v.GetString("branding.name")
+	set.Branding.Files = v.GetString("branding.files")
 
 	var err error
 	if _, noauth := getParamB(flags, "noauth"); noauth {
